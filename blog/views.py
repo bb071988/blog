@@ -56,3 +56,18 @@ def add_post_post():
     session.add(post)
     session.commit()
     return redirect(url_for("posts"))
+
+########## extend starts here ####################
+
+# # Returns the description of all of the basesballs
+# session.query(Item.description).filter(Item.item_name == "baseball").all()
+
+@app.route("/post/<int:id>")
+def one_post(id):
+    posts = session.query(Post).filter(Post.id == id).all()
+#     posts = posts.order_by(Post.datetime.desc())
+#     posts = posts.all()
+# I think we want a URL for in here
+    return render_template("onepost.html",
+        posts=posts
+    )

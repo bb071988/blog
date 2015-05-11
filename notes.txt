@@ -7,3 +7,18 @@ to seed the database with the 25 sample posts
 
 then run python manage.py run to run the server and preview at port 8080
 
+tried adding a .gitignore file - it didn't seem to take - ask Sam again
+
+can't seem to merge page_breaks into master? - No actually it seems to be working - why can't I see changes hightlighted in github?
+
+/post/<id>
+Allows you to view a single post
+Should be accessed by clicking on the title of a post
+Should use the render_post macro to display the post
+
+list all the titles
+titles link to individual posts.
+
+
+
+
