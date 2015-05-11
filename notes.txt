@@ -1,0 +1,9 @@
+May need to export this variable
+
+export BLOGFUL_SECRET_KEY="secretpassword1988"  
+
+must run python manager.py seed
+to seed the database with the 25 sample posts
+
+then run python manage.py run to run the server and preview at port 8080
+
