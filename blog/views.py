@@ -3,6 +3,7 @@ from flask import render_template
 from blog import app
 from .database import session
 from .models import Post
+from flask import url_for
 
 # @app.route("/")
 # def posts():
@@ -62,12 +63,19 @@ def add_post_post():
 # # Returns the description of all of the basesballs
 # session.query(Item.description).filter(Item.item_name == "baseball").all()
 
-@app.route("/post/<int:id>")
+@app.route("/post/titles/<int:id>")
 def one_post(id):
-    posts = session.query(Post).filter(Post.id == id).all()
-#     posts = posts.order_by(Post.datetime.desc())
-#     posts = posts.all()
-# I think we want a URL for in here
+    post = session.query(Post).filter(Post.id == id).first() # sb first
+
     return render_template("onepost.html",
+        post=post
+    )
+
+@app.route("/post/titles")
+def post_titles():
+    posts = session.query(Post)
+    posts = posts.order_by(Post.datetime.desc())
+    posts = posts.all()
+    return render_template("post_titles.html",
         posts=posts
     )
