@@ -79,3 +79,14 @@ def post_titles():
     return render_template("post_titles.html",
         posts=posts
     )
+
+# @app.route("/post/<int:id>/edit")
+# @app.route("/post/add", methods=["POST"])
+# def add_post_post():
+#     post = Post(
+#         title=request.form["title"],
+#         content=mistune.markdown(request.form["content"]),
+#     )
+#     session.add(post)
+#     session.commit()
+#     return redirect(url_for("posts"))
