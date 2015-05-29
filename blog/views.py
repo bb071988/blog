@@ -60,10 +60,7 @@ def add_post_post():
 
 ########## extend starts here ####################
 
-# # Returns the description of all of the basesballs
-# session.query(Item.description).filter(Item.item_name == "baseball").all()
-
-@app.route("/post/titles/<int:id>")
+@app.route("/post/<int:id>")
 def one_post(id):
     post = session.query(Post).filter(Post.id == id).first() # sb first
 
@@ -71,16 +68,34 @@ def one_post(id):
         post=post
     )
 
-@app.route("/post/titles")
-def post_titles():
-    posts = session.query(Post)
-    posts = posts.order_by(Post.datetime.desc())
-    posts = posts.all()
-    return render_template("post_titles.html",
-        posts=posts
-    )
 
-# @app.route("/post/<int:id>/edit")
+@app.route("/post/<int:id>/edit", methods=["GET"])
+def edit_post_get(id):
+    post = session.query(Post).filter(Post.id == id).first()
+    return render_template("edit_post.html",post=post)
+
+
+@app.route("/post/<int:id>/edit", methods=["POST"])
+def edit_post_post(id):
+    post = Post(
+        title=request.form["title"],
+        content=mistune.markdown(request.form["content"]),
+    )
+    session.add(post)
+    session.commit()
+    return redirect(url_for("posts"))
+
+@app.route("/post/<int:id>/delete", methods =["GET"])
+def delete_post_get(id):
+    post = session.query(Post).get(id)
+    if post is None:
+        abort(404)
+    else:
+        session.delete(post)
+        session.commit()
+    return redirect(url_for("posts"))
+
+# # @app.route("/post/<int:id>/edit")
 # @app.route("/post/add", methods=["POST"])
 # def add_post_post():
 #     post = Post(
@@ -90,3 +105,12 @@ def post_titles():
 #     session.add(post)
 #     session.commit()
 #     return redirect(url_for("posts"))
+
+# @app.route("/post/titles")
+# def post_titles():
+#     posts = session.query(Post)
+#     posts = posts.order_by(Post.datetime.desc())
+#     posts = posts.all()
+#     return render_template("post_titles.html",
+#         posts=posts
+#     )
