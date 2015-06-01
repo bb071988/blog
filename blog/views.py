@@ -7,6 +7,9 @@ from flask import url_for
 ## added for login
 from flask.ext.login import login_required
 
+## added for author
+from flask.ext.login import current_user
+
 
 @app.route("/")
 @app.route("/page/<int:page>")
@@ -49,6 +52,7 @@ def add_post_post():
     post = Post(
         title=request.form["title"],
         content=mistune.markdown(request.form["content"]),
+        author=current_user
     )
     session.add(post)
     session.commit()
