@@ -106,6 +106,7 @@ def login_get():
 
 from flask import flash
 from flask.ext.login import login_user
+from flask.ext.login import logout_user  ## working here for logout
 from werkzeug.security import check_password_hash
 from .models import User
 
@@ -120,3 +121,16 @@ def login_post():
 
     login_user(user)
     return redirect(request.args.get('next') or url_for("posts"))
+
+# @app.route("/logout",methods=["GET"])
+# def logout():
+#         flask.ext.login.logout_user()
+#         return redirect(url_for("posts"))
+
+### modified version of logout from flask doc https://flask-login.readthedocs.org/en/latest/
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return render_template("logout.html")
+    
