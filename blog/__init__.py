@@ -8,3 +8,6 @@ app.config.from_object(config_path)
 
 from . import views
 from . import filters
+
+## added for login
+from . import login

@@ -1,0 +1,34 @@
+Traceback (most recent call last)
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1836, in __call__
+return self.wsgi_app(environ, start_response)
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1820, in wsgi_app
+response = self.make_response(self.handle_exception(e))
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1403, in handle_exception
+reraise(exc_type, exc_value, tb)
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+response = self.full_dispatch_request()
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+rv = self.handle_user_exception(e)
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+reraise(exc_type, exc_value, tb)
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+rv = self.dispatch_request()
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+return self.view_functions[rule.endpoint](**req.view_args)
+File "/home/action/blog/blog/views.py", line 41, in posts
+total_pages=total_pages
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/templating.py", line 126, in render_template
+ctx.app.update_template_context(context)
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/app.py", line 716, in update_template_context
+context.update(func())
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask_login.py", line 825, in _user_context_processor
+return dict(current_user=_get_user())
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask_login.py", line 794, in _get_user
+current_app.login_manager._load_user()
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask_login.py", line 340, in _load_user
+deleted = self._session_protection()
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask_login.py", line 374, in _session_protection
+sess['_id'] = ident
+File "/home/action/.virtualenvs/blog/lib/python2.7/site-packages/flask/sessions.py", line 126, in _fail
+raise RuntimeError('the session is unavailable because no secret '
+RuntimeError: the session is unavailable because no secret key was set. Set the secret_key on the application to something unique and secret.
