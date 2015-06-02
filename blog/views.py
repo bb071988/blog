@@ -9,8 +9,19 @@ from flask.ext.login import login_required
 
 ## added for author
 from flask.ext.login import current_user
+from flask.ext.login import login_user
+from flask.ext.login import *
+
+########  trying to add user loader callback NOT Part of lesson ##########
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.get(userid)
 
 
+###################################################################
 @app.route("/")
 @app.route("/page/<int:page>")
 def posts(page=1, paginate_by=10):
@@ -70,14 +81,26 @@ def one_post(id):
 
 
 @app.route("/post/<int:id>/edit", methods=["GET"])
+@login_required
 def edit_post_get(id):
+    #########################################################################
+    
     post = session.query(Post).filter(Post.id == id).first()
-    return render_template("edit_post.html",post=post)
+   ## user = session.query(User).filter_by(User.posts.contains(Post.author_id).first()
+    #user = current_user()
+    ######user = User.get(userid)
+    print "post id is {}".format(post.id)
+    print "post author is {}".format(post.author_id)
+    ### doesn't work - print "post user id is {}".format(user.id)
+    print "current user id is {}".format(this_user)
+    #print user
+    if post.author_id == this_user:
+        return render_template("edit_post.html",post=post)
+    else:
+        return render_template("security.html",message="Sorry you can't edit another user's post")
 
 
 @app.route("/post/<int:id>/edit", methods=["POST"])
-
-
 def edit_post_post(id):
     post = Post(
         title=request.form["title"],
@@ -88,8 +111,6 @@ def edit_post_post(id):
     return redirect(url_for("posts"))
 
 @app.route("/post/<int:id>/delete", methods =["GET"])
-
-
 def delete_post_get(id):
     post = session.query(Post).get(id)
     if post is None:
@@ -115,6 +136,8 @@ def login_post():
     email = request.form["email"]
     password = request.form["password"]
     user = session.query(User).filter_by(email=email).first()
+    global this_user 
+    this_user = user.id
     if not user or not check_password_hash(user.password, password):
         flash("Incorrect username or password", "danger")
         return redirect(url_for("login_get"))
