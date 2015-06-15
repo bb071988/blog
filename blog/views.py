@@ -12,18 +12,9 @@ from flask.ext.login import current_user
 from flask.ext.login import login_user
 from flask.ext.login import *
 
-########  trying to add user loader callback NOT Part of lesson ##########
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-@login_manager.user_loader
-def load_user(userid):
-    return User.get(userid)
-
-
-###################################################################
 @app.route("/")
 @app.route("/page/<int:page>")
+@login_required
 def posts(page=1, paginate_by=10):
     # Zero-indexed page
     page_index = page - 1
@@ -46,8 +37,10 @@ def posts(page=1, paginate_by=10):
         has_next=has_next,
         has_prev=has_prev,
         page=page,
-        total_pages=total_pages
-    )
+        total_pages=total_pages,
+        #is_owner = False
+        #current_user = current_user
+    )  #isauth or is postowner.
 
 @app.route("/post/add", methods=["GET"])
 @login_required
@@ -86,26 +79,28 @@ def edit_post_get(id):
     #########################################################################
     
     post = session.query(Post).filter(Post.id == id).first()
-   ## user = session.query(User).filter_by(User.posts.contains(Post.author_id).first()
-    #user = current_user()
-    ######user = User.get(userid)
+  
     print "post id is {}".format(post.id)
     print "post author is {}".format(post.author_id)
-    ### doesn't work - print "post user id is {}".format(user.id)
-    print "current user id is {}".format(this_user)
-    #print user
-    if post.author_id == this_user:
-        return render_template("edit_post.html",post=post)
+    print "current user id is {}".format(current_user.id)
+    
+    if post.author_id == current_user.id:
+        return render_template("edit_post.html",post=post)  #could pass isowner here
     else:
         return render_template("security.html",message="Sorry you can't edit another user's post")
 
-
 @app.route("/post/<int:id>/edit", methods=["POST"])
+@login_required
 def edit_post_post(id):
     post = Post(
         title=request.form["title"],
         content=mistune.markdown(request.form["content"]),
     )
+    
+    if post.author_id == current_user.id:
+        return render_template("edit_post.html",post=post)
+    else:
+        return abort(403)
     session.add(post)
     session.commit()
     return redirect(url_for("posts"))
@@ -116,9 +111,12 @@ def delete_post_get(id):
     if post is None:
         abort(404)
     else:
-        session.delete(post)
-        session.commit()
-    return redirect(url_for("posts"))
+        if post.author_id == current_user.id:
+            session.delete(post)
+            session.commit()
+            return redirect(url_for("posts"))
+        else:
+            abort(403)
 
 ### added for login
 @app.route("/login", methods=["GET"])
@@ -136,8 +134,6 @@ def login_post():
     email = request.form["email"]
     password = request.form["password"]
     user = session.query(User).filter_by(email=email).first()
-    global this_user 
-    this_user = user.id
     if not user or not check_password_hash(user.password, password):
         flash("Incorrect username or password", "danger")
         return redirect(url_for("login_get"))
