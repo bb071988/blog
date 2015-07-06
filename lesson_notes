@@ -1,0 +1,5 @@
+Lesson Notes
+
+PYTHONPATH=. python tests/test_filters.py
+
+sudo npm install -g phantomjs.
