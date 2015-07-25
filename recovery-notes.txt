@@ -1,0 +1,5 @@
+$ sudo service postgresql start
+ * Starting PostgreSQL 9.3 database server
+   ...done.
+   
+   To install this on Cloud9, run sudo npm install -g phantomjs.
