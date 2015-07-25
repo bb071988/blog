@@ -11,7 +11,8 @@ manager = Manager(app)
 @manager.command
 def run():
     port = int(os.environ.get('PORT', 8080))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port)  
+## unsuccessful    app.run(host='127.0.0.1', port=port)  # addedded 7.11.15 to see if eliminated postgres sql startup error after porting
     
 
 

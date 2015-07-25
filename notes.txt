@@ -1,3 +1,25 @@
+have an extra blog in my directory structure - python path refernece needs to account
+$ PYTHONPATH=. python blog/tests/test_filters.py
+
+
+
+replatform notes
+
+sudo sudo -u postgres createuser --superuser $USER
+
+as in above example sudo requires sudo sudo on c9
+
+Step # 1: Add a Linux/UNIX user called tom
+Type the following commands to create a UNIX/Linux user called tom:
+# adduser tom
+# passwd tom
+
+added a user called action password action - that eliminated 
+
+
+
+
+
 May need to export this variable
 
 export BLOGFUL_SECRET_KEY="secretpassword1988"  
