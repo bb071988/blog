@@ -3,3 +3,5 @@ $ sudo service postgresql start
    ...done.
    
    To install this on Cloud9, run sudo npm install -g phantomjs.
+   
+  try process.env.PORT as port and 0.0.0.0 as host

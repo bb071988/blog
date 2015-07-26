@@ -41,8 +41,7 @@ class TestViews(unittest.TestCase):
         button = self.browser.find_by_css("button[type=submit]")
         button.click()
         #self.assertEqual(self.browser.url, "http://0.0.0.0:8080/") # original line
-        self.assertEqual(self.browser.url, "http://127.0.0.1:5000/") # ask sam about this line
-        #self.assertEqual(self.browser.url, "http://0.0.0.0:process.env.PORT/") # original line
+        self.assertEqual(self.browser.url, "http://127.0.0.1:5000/login") # ask sam about this line
 
     def test_login_incorrect(self):
  #       self.browser.visit("http://0.0.0.0:8080/login")
