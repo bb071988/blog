@@ -14,7 +14,7 @@ from flask.ext.login import *
 
 @app.route("/")
 @app.route("/page/<int:page>")
-@login_required
+#@login_required             ####################### commented out to eliminate the next issue
 def posts(page=1, paginate_by=10):
     # Zero-indexed page
     page_index = page - 1
