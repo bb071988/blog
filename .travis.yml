@@ -10,10 +10,10 @@ before_script:
 
     
 script:
-    - PYTHONPATH=. python blog/tests/test_filters.py
-    - PYTHONPATH=. python blog/tests/test_views_integration.py
-    - PYTHONPATH=. python blog/tests/test_views_acceptance.py
-    - PYTHONPATH=. python blog/tests/test_extensions.py
+    - PYTHONPATH=. python tests/test_filters.py
+    - PYTHONPATH=. python tests/test_views_integration.py
+    - PYTHONPATH=. python tests/test_views_acceptance.py
+    - PYTHONPATH=. python tests/test_extensions.py
     # Add any other tests here
     # added -w to see if we can stop password prompt for new ubuntu user
     # added this line to add ubuntu to database
