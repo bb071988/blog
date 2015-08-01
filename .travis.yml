@@ -6,8 +6,8 @@ services: postgresql
 env:
     - CONFIG_PATH=blog.config.TravisConfig
 before_script:
-    - psql -c -w 'create database "blogful-test";' -U postgres # added -w to see if we can stop password prompt for new ubuntu user
-    - psql createuser ubuntu  # added this line to add ubuntu to database
+    - psql -c 'create database "blogful-test";' -U postgres 
+    - psql createuser ubuntu  
     
 script:
     - PYTHONPATH=. python blog/tests/test_filters.py
@@ -15,3 +15,5 @@ script:
     - PYTHONPATH=. python blog/tests/test_views_acceptance.py
     - PYTHONPATH=. python blog/tests/test_extensions.py
     # Add any other tests here
+    # added -w to see if we can stop password prompt for new ubuntu user
+    # added this line to add ubuntu to database
