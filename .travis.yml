@@ -5,7 +5,9 @@ install: pip install -r requirements.txt
 env:
     - CONFIG_PATH=blog.config.TravisConfig
 before_script:
-    - psql -c 'create database "blogful-test";' -U postgres
+    - psql -c -w 'create database "blogful-test";' -U postgres # added -w to see if we can stop password prompt for new ubuntu user
+    - psql createuser ubuntu  # added this line to add ubuntu to database
+    
 script:
     - PYTHONPATH=. python blog/tests/test_filters.py
     - PYTHONPATH=. python blog/tests/test_views_integration.py
