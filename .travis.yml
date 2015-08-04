@@ -18,3 +18,9 @@ script:
     # added -w to see if we can stop password prompt for new ubuntu user
     # added this line to add ubuntu to database
     #     - psql createuser ubuntu  
+    
+virtualenv:
+  system_site_packages: true
+  
+before_install:
+  - pip install splinter
