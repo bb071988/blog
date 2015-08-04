@@ -4,7 +4,8 @@ python:
 install: pip install -r requirements.txt
 services: postgresql
 env:
-    - CONFIG_PATH=blog.config.TravisConfig
+    - CONFIG_PATH=blog.blog.config.TravisConfig
+    
 before_script:
     - psql -c 'create database "blogful-test";' -U postgres 
 
