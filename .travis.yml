@@ -6,7 +6,7 @@ services: postgresql
 
     
 before_script:
-    - psql -c 'create database "blogful-test";'
+    - psql -c 'create database "blogful-test";' - U postgres
     
 env:
     - CONFIG_PATH=blog.config.TravisConfig
