@@ -4,13 +4,12 @@ python:
 install: pip install -r requirements.txt
 services: postgresql
 
+env:
+    - CONFIG_PATH=blog.config.TravisConfig
     
 before_script:
     - psql -c 'create database "blogful-test";' - U postgres
     
-env:
-    - CONFIG_PATH=blog.config.TravisConfig
-
     
 script:
     - PYTHONPATH=. python blog/tests/test_filters.py
